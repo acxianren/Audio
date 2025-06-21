@@ -1,64 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Click to Enter</title>
+  <meta charset="UTF-8" />
+  <title>Click to Begin</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden;
       height: 100%;
-    }
-
-    #bg-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      z-index: -1;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
     }
 
     #overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 2em;
-      background-color: rgba(0,0,0,0.3);
+      z-index: 2;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: opacity 1s ease;
+    }
+
+    #bg-video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
       z-index: 1;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <video id="bg-video" autoplay muted loop playsinline>
+  <div id="overlay">Click to begin the experience</div>
+
+  <video id="bg-video" loop muted autoplay playsinline>
     <source src="Teresa.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
-  <div id="overlay">Click to enter</div>
-
-  <audio id="my-audio" loop>
+  <audio id="bg-audio" loop>
     <source src="Teresa.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
   </audio>
 
   <script>
-    const audio = document.getElementById('my-audio');
     const overlay = document.getElementById('overlay');
+    const video = document.getElementById('bg-video');
+    const audio = document.getElementById('bg-audio');
 
     overlay.addEventListener('click', () => {
-      audio.currentTime = 90; // jump to 1:30
+      // Start video
+      video.style.display = 'block';
+
+      // Fade out overlay
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.style.display = 'none', 1000);
+
+      // Start audio from 1:30
+      audio.currentTime = 80;
       audio.play();
-      overlay.style.display = 'none'; // hide overlay after click
+
+      // Optional: unmute video if it has sound
+      video.muted = false;
+      video.play();
     }, { once: true });
   </script>
 
