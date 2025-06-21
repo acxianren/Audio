@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shhh... Just Listen</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 20vh;
+    }
+
+    #secret-btn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #ff0055;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #secret-btn:hover {
+      background-color: #cc0044;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Just give it 10 seconds...</h1>
+  <audio id="my-audio" autoplay loop>
+    <source src="Teresa.wav" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <button id="secret-btn">Don’t Click This</button>
+
+  <script>
+    const audio = document.getElementById('my-audio');
+
+    audio.addEventListener('loadedmetadata', () => {
+      // Jump to 1 minute 30 seconds (90 seconds)
+      audio.currentTime = 90;
+      audio.play();
+    });
+
+    document.getElementById('secret-btn').addEventListener('click', () => {
+      alert("Now you've heard the secret part!");
+    });
+  </script>
+
+</body>
+</html>
