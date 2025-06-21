@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Reveal Experience</title>
+  <meta charset="UTF-8">
+  <title>Click to Begin</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden;
       height: 100%;
-      background: black;
+      overflow: hidden;
+      background-color: black;
+      font-family: Arial, sans-serif;
+      color: white;
     }
 
     #photo-screen {
@@ -17,16 +19,29 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: url('Teresa.jpg') center center no-repeat;
-      background-size: cover;
+      background-size: contain;
+      background-color: black;
       z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       cursor: pointer;
       transition: opacity 1s ease;
+    }
+
+    #photo-screen p {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #ccc;
     }
 
     #video-bg {
       position: absolute;
       top: 0; left: 0;
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: none;
       z-index: 1;
@@ -35,7 +50,9 @@
 </head>
 <body>
 
-  <div id="photo-screen"></div>
+  <div id="photo-screen">
+    <p>你媽 你再點</p>
+  </div>
 
   <video id="video-bg" loop muted playsinline>
     <source src="Teresa.mp4" type="video/mp4">
@@ -51,15 +68,12 @@
     const audio = document.getElementById('bg-audio');
 
     photo.addEventListener('click', () => {
-      // Reveal video
       video.style.display = 'block';
       video.play();
 
-      // Play audio from 1:30
       audio.currentTime = 90;
       audio.play();
 
-      // Fade out photo screen
       photo.style.opacity = '0';
       setTimeout(() => {
         photo.style.display = 'none';
