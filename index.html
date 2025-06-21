@@ -1,57 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Click to Begin</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden;
       background-color: black;
-      font-family: Arial, sans-serif;
       color: white;
-    }
-
-    #photo-screen {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: url('Teresa.jpg') center center no-repeat;
-      background-size: contain;
-      background-color: black;
-      z-index: 3;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      text-align: center;
+      justify-content: center;
       cursor: pointer;
-      transition: opacity 1s ease;
     }
 
-    #photo-screen p {
+    #splash-container {
+      text-align: center;
+      transition: opacity 1s ease;
+      z-index: 3;
+    }
+
+    #splash-image {
+      max-width: 60vmin;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    #splash-text {
       margin-top: 20px;
       font-size: 1.2rem;
       color: #ccc;
     }
 
     #video-bg {
-      position: absolute;
+      position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: none;
       z-index: 1;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <div id="photo-screen">
-    <p>你媽 你再點</p>
+  <div id="splash-container">
+    <img src="Teresa.jpg" alt="Intro Image" id="splash-image">
+    <div id="splash-text">Click anywhere to enter</div>
   </div>
 
   <video id="video-bg" loop muted playsinline>
@@ -63,21 +65,19 @@
   </audio>
 
   <script>
-    const photo = document.getElementById('photo-screen');
+    const splash = document.getElementById('splash-container');
     const video = document.getElementById('video-bg');
     const audio = document.getElementById('bg-audio');
 
-    photo.addEventListener('click', () => {
+    document.body.addEventListener('click', () => {
+      splash.style.opacity = '0';
+      setTimeout(() => splash.style.display = 'none', 1000);
+
       video.style.display = 'block';
       video.play();
 
-      audio.currentTime = 90;
+      audio.currentTime = 90; // start at 1:30
       audio.play();
-
-      photo.style.opacity = '0';
-      setTimeout(() => {
-        photo.style.display = 'none';
-      }, 1000);
     }, { once: true });
   </script>
 
