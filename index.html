@@ -2,59 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Audio Experience</title>
+  <title>Click to Enter</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      background-color: #111;
-      color: #fff;
-      font-family: Arial, sans-serif;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    #bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-    }
-
-    #status {
-      font-size: 1rem;
-      color: #aaa;
+      justify-content: center;
+      color: white;
+      font-size: 2em;
+      background-color: rgba(0,0,0,0.3);
+      z-index: 1;
     }
   </style>
 </head>
 <body>
 
-  <h1>Welcome. Sit back and listen.</h1>
-  <p id="status">Loading sound...</p>
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="Teresa.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-  <audio id="my-audio" autoplay loop>
+  <div id="overlay">Click to enter</div>
+
+  <audio id="my-audio" loop>
     <source src="Teresa.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
   </audio>
 
   <script>
     const audio = document.getElementById('my-audio');
-    const status = document.getElementById('status');
+    const overlay = document.getElementById('overlay');
 
-    audio.addEventListener('loadedmetadata', () => {
-      audio.currentTime = 90; // Jump to 1:30
-    });
-
-    audio.play().then(() => {
-      status.textContent = "Playing from 1:30 🎶";
-    }).catch((err) => {
-      status.textContent = "Autoplay was blocked. Please click the page to start audio.";
-      document.body.addEventListener('click', () => {
-        audio.play();
-        status.textContent = "Now playing from 1:30 🎶";
-      }, { once: true });
-    });
+    overlay.addEventListener('click', () => {
+      audio.currentTime = 90; // jump to 1:30
+      audio.play();
+      overlay.style.display = 'none'; // hide overlay after click
+    }, { once: true });
   </script>
 
 </body>
